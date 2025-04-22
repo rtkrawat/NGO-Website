@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    position: relative;
+    overflow: hidden;
+}
+
+.background-slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    animation: slideshow 30s infinite;
+}
+
+@keyframes slideshow {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.animated-circles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.circle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+}
+
+.circle:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    left: -150px;
+    animation: float 20s infinite linear;
+}
+
+.circle:nth-child(2) {
+    width: 500px;
+    height: 500px;
+    bottom: -250px;
+    right: -250px;
+    animation: float 25s infinite linear reverse;
+}
+
+.circle:nth-child(3) {
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    right: -100px;
+    animation: float 18s infinite linear;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-150px) rotate(360deg); }
+}
+
+.register-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    z-index: 1;
+}
+
+.register-box {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    padding: 2.5rem;
+}
+
+.register-box h2 {
+    text-align: center;
+    color: #0066cc;
+    margin-bottom: 1.5rem;
+}
+
+.animate-title {
+    animation: fadeIn 1s;
+}
+
+.animate-form {
+    animation: slideUp 0.8s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-type-selector {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    border-radius: 6px;
+    background-color: #f0f2f5;
+    overflow: hidden;
+}
+
+.type-btn {
+    flex: 1;
+    padding: 0.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+    color: #555;
+}
+
+.type-btn.active {
+    background-color: #0066cc;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 500;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #0066cc;
+    outline: none;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-btn:hover {
+    background-color: #0052a3;
+}
+
+.form-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.form-footer a {
+    color: #0066cc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.form-footer a:hover {
+    color: #0052a3;
+    text-decoration: underline;
+}
+
+.additional-fields {
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.5s;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 576px) {
+    .register-container {
+        padding: 1rem;
+    }
+    
+    .register-box {
+        padding: 1.5rem;
+    }
+    
+    .user-type-selector {
+        flex-direction: column;
+        gap: 0.5rem;
+        background: none;
+    }
+    
+    .type-btn {
+        border-radius: 4px;
+    }
+} 

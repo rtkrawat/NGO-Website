@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Hub - Events</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">VolunteerHub</div>
+        <div class="nav-menu">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+            <a href="{% url 'projects' %}" class="nav-link">Projects</a>
+            <a href="{% url 'events' %}" class="nav-link active">Events</a>
+            <a href="{% url 'certificates' %}" class="nav-link">Certificates</a>
+            <div class="nav-buttons">
+                <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-login">Registration</a>
+            </div>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Upcoming Events</h1>
+            <p>Join our community events and make a difference together</p>
+            <div class="search-container">
+                <input type="text" placeholder="Search for events...">
+                <button class="btn btn-primary">Find Events</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="calendar-section">
+        <h2>Event Calendar</h2>
+        <div class="calendar-controls">
+            <button class="btn btn-secondary">Previous Month</button>
+            <h3>April 2025</h3>
+            <button class="btn btn-secondary">Next Month</button>
+        </div>
+        <div class="calendar-grid">
+            <!-- Calendar will be dynamically inserted via JavaScript -->
+        </div>
+    </section>
+
+    <section class="events-list">
+        <h2>Featured Events</h2>
+        <div class="event-cards">
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">15</span>
+                    <span class="month">May</span>
+                </div>
+                <div class="event-details">
+                    <h3>Environmental Cleanup Day</h3>
+                    <p class="event-location">City Park, Downtown</p>
+                    <p class="event-time">10:00 AM - 2:00 PM</p>
+                    <p class="event-description">Join us for a day of cleaning up our local park and planting new trees to beautify our community.</p>
+                    <a href="#" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">22</span>
+                    <span class="month">May</span>
+                </div>
+                <div class="event-details">
+                    <h3>Food Drive</h3>
+                    <p class="event-location">Community Center</p>
+                    <p class="event-time">9:00 AM - 4:00 PM</p>
+                    <p class="event-description">Help collect and distribute food to families in need in our community.</p>
+                    <a href="#" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">5</span>
+                    <span class="month">Jun</span>
+                </div>
+                <div class="event-details">
+                    <h3>Literacy Workshop</h3>
+                    <p class="event-location">Public Library</p>
+                    <p class="event-time">1:00 PM - 5:00 PM</p>
+                    <p class="event-description">Volunteer training for our literacy program. Learn how to be a reading mentor for children and adults.</p>
+                    <a href="#" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VolunteerHub</h3>
+                <p>Building a better world through volunteerism and social impact.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'projects' %}">Browse Projects</a>
+                <a href="{% url 'events' %}">Upcoming Events</a>
+                <a href="{% url 'register' %}">Join Now</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@volunteerhub.org</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Volunteer Street</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VolunteerHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html> 

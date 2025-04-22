@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VolunteerHub - Certificates</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .certificates-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .certificate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .certificate-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .certificate-preview {
+            height: 180px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .certificate-preview img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        .certificate-info {
+            padding: 1.5rem;
+        }
+        
+        .certificate-title {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #0066cc;
+        }
+        
+        .certificate-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .certificate-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-view, .btn-download {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-view {
+            background-color: #e6f2ff;
+            color: #0066cc;
+        }
+        
+        .btn-view:hover {
+            background-color: #d4e8ff;
+        }
+        
+        .btn-download {
+            background-color: #0066cc;
+            color: white;
+        }
+        
+        .btn-download:hover {
+            background-color: #0052a3;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .filter-dropdown {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">VolunteerHub</div>
+        <div class="nav-menu">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+            <a href="{% url 'projects' %}" class="nav-link">Projects</a>
+            <a href="{% url 'events' %}" class="nav-link">Events</a>
+            <a href="{% url 'certificates' %}" class="nav-link active">Certificates</a>
+            <div class="nav-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-primary">My Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-login">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-signup">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your Volunteer Certificates</h1>
+            <p>Track your impact and showcase your contributions</p>
+        </div>
+    </section>
+
+    <div class="certificates-container">
+        <div class="section-header">
+            <h2>Your Achievement Certificates</h2>
+            <p>These certificates recognize your volunteer work and contributions</p>
+        </div>
+        
+        <div class="filters">
+            <select class="filter-dropdown">
+                <option value="all">All Certificates</option>
+                <option value="recent">Recent Certificates</option>
+                <option value="projects">Project Completion</option>
+                <option value="training">Training Certificates</option>
+                <option value="awards">Special Awards</option>
+            </select>
+            
+            <select class="filter-dropdown">
+                <option value="all">All Time</option>
+                <option value="month">This Month</option>
+                <option value="quarter">This Quarter</option>
+                <option value="year">This Year</option>
+            </select>
+        </div>
+        
+        {% if user.is_authenticated %}
+            {% if certificates %}
+                <div class="certificate-grid">
+                    {% for certificate in certificates %}
+                        <div class="certificate-card">
+                            <div class="certificate-preview">
+                                <img src="{% if certificate.preview %}{{ certificate.preview.url }}{% else %}{% static 'images/certificate-default.png' %}{% endif %}" alt="{{ certificate.title }}">
+                            </div>
+                            <div class="certificate-info">
+                                <h3 class="certificate-title">{{ certificate.title }}</h3>
+                                <div class="certificate-meta">
+                                    <p>Issued: {{ certificate.issue_date }}</p>
+                                    <p>Project: {{ certificate.project }}</p>
+                                </div>
+                                <div class="certificate-actions">
+                                    <a href="{% url 'certificate_view' certificate.id %}" class="btn-view">View</a>
+                                    <a href="{% url 'certificate_download' certificate.id %}" class="btn-download">Download</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">🏆</div>
+                    <h3>No Certificates Yet</h3>
+                    <p>Complete volunteer projects to earn certificates of recognition!</p>
+                    <a href="{% url 'projects' %}" class="btn btn-primary" style="margin-top: 1rem;">Find Projects</a>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">🔒</div>
+                <h3>Login to View Your Certificates</h3>
+                <p>Sign in to your account to see your volunteer certificates and achievements.</p>
+                <div style="margin-top: 1rem;">
+                    <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-secondary" style="margin-left: 0.5rem;">Register</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to earn more certificates?</h2>
+            <p>Join our volunteer projects and make a difference in your community.</p>
+            <a href="{% url 'projects' %}" class="btn btn-primary">Browse Projects</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VolunteerHub</h3>
+                <p>Building a better world through volunteerism and social impact.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'projects' %}">Browse Projects</a>
+                <a href="{% url 'events' %}">Upcoming Events</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@volunteerhub.org</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Volunteer Street</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VolunteerHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html> 

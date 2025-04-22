@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Hub - Projects</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">VolunteerHub</div>
+        <div class="nav-menu">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+            <a href="{% url 'projects' %}" class="nav-link active">Projects</a>
+            <a href="{% url 'events' %}" class="nav-link">Events</a>
+            <a href="{% url 'certificates' %}" class="nav-link">Certificates</a>
+            <div class="nav-buttons">
+                <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-login">Registration</a>
+            </div>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Volunteer Projects</h1>
+            <p>Find meaningful projects that match your skills and interests</p>
+            <div class="search-container">
+                <input type="text" placeholder="Search for volunteer opportunities...">
+                <button class="btn btn-primary">Find Projects</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects">
+        <h2>Current Projects</h2>
+        <div class="project-grid" id="projectGrid">
+            <!-- Projects will be dynamically inserted here via JavaScript -->
+        </div>
+    </section>
+
+    <section class="filters">
+        <h2>Filter Projects</h2>
+        <div class="filter-container">
+            <div class="filter-group">
+                <h3>Categories</h3>
+                <label><input type="checkbox"> Environment</label>
+                <label><input type="checkbox"> Education</label>
+                <label><input type="checkbox"> Healthcare</label>
+                <label><input type="checkbox"> Community Development</label>
+                <label><input type="checkbox"> Animal Welfare</label>
+            </div>
+            <div class="filter-group">
+                <h3>Location</h3>
+                <label><input type="checkbox"> Remote</label>
+                <label><input type="checkbox"> Local</label>
+                <label><input type="checkbox"> International</label>
+            </div>
+            <div class="filter-group">
+                <h3>Duration</h3>
+                <label><input type="checkbox"> One-time</label>
+                <label><input type="checkbox"> Short-term</label>
+                <label><input type="checkbox"> Long-term</label>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VolunteerHub</h3>
+                <p>Building a better world through volunteerism and social impact.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'projects' %}">Browse Projects</a>
+                <a href="{% url 'events' %}">Upcoming Events</a>
+                <a href="{% url 'register' %}">Join Now</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@volunteerhub.org</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Volunteer Street</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VolunteerHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html> 

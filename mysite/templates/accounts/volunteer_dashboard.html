@@ -1,0 +1,337 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Dashboard - VolunteerHub</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dashboard-title {
+            font-size: 1.8rem;
+            color: #0066cc;
+        }
+        
+        .dashboard-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .dashboard-btn {
+            padding: 0.5rem 1rem;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .dashboard-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .dashboard-btn.primary {
+            background-color: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+        
+        .dashboard-btn.primary:hover {
+            background-color: #0052a3;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            color: #0066cc;
+            margin: 0;
+        }
+        
+        .card-icon {
+            font-size: 1.5rem;
+            color: #0066cc;
+        }
+        
+        .dashboard-list {
+            margin-top: 2rem;
+        }
+        
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .list-title {
+            font-size: 1.5rem;
+            color: #0066cc;
+            margin: 0;
+        }
+        
+        .list-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .list-table th, .list-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .list-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .list-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-badge.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-badge.approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-badge.completed {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">VolunteerHub</div>
+        <div class="nav-menu">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+            <a href="{% url 'projects' %}" class="nav-link">Projects</a>
+            <a href="{% url 'events' %}" class="nav-link">Events</a>
+            <a href="{% url 'certificates' %}" class="nav-link">Certificates</a>
+            <div class="nav-buttons">
+                <a href="{% url 'profile' %}" class="btn btn-login">My Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-login">Logout</a>
+            </div>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="hero" style="height: 30vh;">
+        <div class="hero-content">
+            <h1>Welcome, {{ user.first_name }}!</h1>
+            <p>Manage your volunteer activities and track your impact</p>
+        </div>
+    </section>
+
+    <div class="dashboard-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">Volunteer Dashboard</h2>
+            <div class="dashboard-actions">
+                <a href="{% url 'projects' %}" class="dashboard-btn primary">Find New Projects</a>
+                <a href="{% url 'profile' %}" class="dashboard-btn">Edit Profile</a>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">Your Impact</h3>
+                    <div class="card-icon">🎯</div>
+                </div>
+                <div class="card-content">
+                    <p><strong>Total Hours:</strong> 0 hours</p>
+                    <p><strong>Projects Completed:</strong> 0</p>
+                    <p><strong>Organizations Helped:</strong> 0</p>
+                    <p><strong>Impact Score:</strong> 0 points</p>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">Your Skills</h3>
+                    <div class="card-icon">💪</div>
+                </div>
+                <div class="card-content">
+                    {% if user.profile.skills %}
+                        <p>{{ user.profile.skills }}</p>
+                    {% else %}
+                        <p>No skills added yet. <a href="{% url 'edit_profile' %}">Add your skills</a> to find better matches!</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">Upcoming Events</h3>
+                    <div class="card-icon">📅</div>
+                </div>
+                <div class="card-content">
+                    <p>You have no upcoming events.</p>
+                    <a href="{% url 'events' %}" class="dashboard-btn">Browse Events</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-list">
+            <div class="list-header">
+                <h3 class="list-title">Your Projects</h3>
+                <a href="{% url 'projects' %}" class="dashboard-btn">View All Projects</a>
+            </div>
+            
+            <div class="empty-state">
+                <div class="empty-state-icon">📋</div>
+                <h3>No Projects Yet</h3>
+                <p>You haven't joined any volunteer projects yet.</p>
+                <a href="{% url 'projects' %}" class="dashboard-btn primary">Find Projects</a>
+            </div>
+            
+            <!-- This will be populated with actual data later -->
+            <!--
+            <table class="list-table">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Organization</th>
+                        <th>Date</th>
+                        <th>Hours</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Beach Cleanup</td>
+                        <td>Ocean Conservancy</td>
+                        <td>May 15, 2025</td>
+                        <td>4 hours</td>
+                        <td><span class="status-badge approved">Confirmed</span></td>
+                        <td><a href="#" class="dashboard-btn">View Details</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            -->
+        </div>
+        
+        <div class="dashboard-list">
+            <div class="list-header">
+                <h3 class="list-title">Your Certificates</h3>
+                <a href="{% url 'certificates' %}" class="dashboard-btn">View All Certificates</a>
+            </div>
+            
+            <div class="empty-state">
+                <div class="empty-state-icon">🏆</div>
+                <h3>No Certificates Yet</h3>
+                <p>Complete volunteer projects to earn certificates!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VolunteerHub</h3>
+                <p>Building a better world through volunteerism and social impact.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'projects' %}">Browse Projects</a>
+                <a href="{% url 'events' %}">Upcoming Events</a>
+                <a href="{% url 'profile' %}">My Profile</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@volunteerhub.org</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Volunteer Street</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VolunteerHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html> 

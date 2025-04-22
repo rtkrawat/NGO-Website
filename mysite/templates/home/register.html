@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Hub - Register</title>
+    <link rel="stylesheet" href="{% static 'register.css' %}">
+</head>
+<body>
+    <div class="background-slideshow">
+        <!-- Slideshow images will be inserted by JavaScript -->
+    </div>
+    
+    <div class="animated-circles">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <div class="register-container">
+        <div class="register-box">
+            <h2 class="animate-title">Create Your Account</h2>
+            <div class="user-type-selector">
+                <button class="type-btn active" data-type="volunteer">Volunteer</button>
+                <button class="type-btn" data-type="ngo">NGO Coordinator</button>
+                <button class="type-btn" data-type="admin">Admin</button>
+            </div>
+
+            <form id="registerForm" class="animate-form">
+                <div class="form-group">
+                    <label for="fullName">Full Name*</label>
+                    <input type="text" id="fullName" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address*</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password*</label>
+                    <input type="password" id="password" required placeholder="Create a password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password*</label>
+                    <input type="password" id="confirmPassword" required placeholder="Confirm your password">
+                </div>
+
+                <!-- Volunteer-specific fields -->
+                <div class="additional-fields volunteer-fields">
+                    <div class="form-group">
+                        <label for="studentId">Student ID*</label>
+                        <input type="text" id="studentId" placeholder="Enter your student ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="institution">Institution*</label>
+                        <input type="text" id="institution" placeholder="Enter your institution name">
+                    </div>
+                </div>
+
+                <!-- NGO-specific fields -->
+                <div class="additional-fields ngo-fields hidden">
+                    <div class="form-group">
+                        <label for="ngoName">NGO Name*</label>
+                        <input type="text" id="ngoName" placeholder="Enter NGO name">
+                    </div>
+                    <div class="form-group">
+                        <label for="registrationNumber">NGO Registration Number*</label>
+                        <input type="text" id="registrationNumber" placeholder="Enter registration number">
+                    </div>
+                    <div class="form-group">
+                        <label for="ngoAddress">NGO Address*</label>
+                        <textarea id="ngoAddress" placeholder="Enter NGO address"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="register-btn">Create Account</button>
+                </div>
+
+                <div class="form-footer">
+                    <p>Already have an account? <a href="{% url 'login' %}">Login Here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'register.js' %}"></script>
+</body>
+</html>

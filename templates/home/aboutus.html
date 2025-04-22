@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Impact Hub - Making a Difference Together</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">ImpactHub</div>
+        <div class="nav-menu">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#join" class="nav-link">Join Us</a>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <div class="slideshow-container">
+            <div class="slides">
+                <!-- Images will be inserted via JavaScript -->
+            </div>
+        </div>
+        <div class="hero-content">
+            <h1>Empowering Communities</h1>
+            <p>Join us in making a lasting impact through sustainable development and community empowerment</p>
+            <a href="#join" class="cta-button">Get Involved</a>
+        </div>
+    </section>
+
+    <section id="impact" class="impact-section">
+        <h2>Our Global Impact</h2>
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Countries Reached</p>
+            </div>
+            <div class="stat-item">
+                <h3>1M+</h3>
+                <p>Lives Impacted</p>
+            </div>
+            <div class="stat-item">
+                <h3>200+</h3>
+                <p>Active Projects</p>
+            </div>
+            <div class="stat-item">
+                <h3>10K+</h3>
+                <p>Volunteers</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="initiatives" class="initiatives-section">
+        <h2>Our Key Initiatives</h2>
+        <div class="initiatives-grid">
+            <div class="initiative-card">
+                <img src="{% static 'images/education_initiative.jpg' %}" alt="Education Initiative">
+                <h3>Education</h3>
+                <p>Providing quality education to underprivileged children worldwide</p>
+            </div>
+            <div class="initiative-card">
+                <img src="{% static 'images/healthcare_initiative.jpg' %}" alt="Healthcare Initiative">
+                <h3>Healthcare</h3>
+                <p>Ensuring accessible healthcare services in remote communities</p>
+            </div>
+            <div class="initiative-card">
+                <img src="{% static 'images/community_development.jpg' %}" alt="Community Development">
+                <h3>Community Development</h3>
+                <p>Building sustainable infrastructure and empowering local communities</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="join" class="join-section">
+        <div class="join-content">
+            <h2>Join Our Mission</h2>
+            <p>Together, we can create lasting change and build a better world for future generations.</p>
+            <div class="join-buttons">
+                <a href="{% url 'volunteer' %}" class="btn btn-primary">Become a Volunteer</a>
+                <a href="{% url 'donate' %}" class="btn btn-secondary">Make a Donation</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ImpactHub</h3>
+                <p>Making a difference through collective action</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: info@impacthub.org</p>
+                <p>Phone: +1 234 567 890</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#">Twitter</a>
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 ImpactHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html> 

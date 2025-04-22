@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Organization Profile - VolunteerHub</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .form-container {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #0066cc;
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background-color: #0052a3;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+
+        .form-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+        
+        .form-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .form-progress:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e9ecef;
+            transform: translateY(-50%);
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 1;
+            background-color: #fff;
+            padding: 0 0.5rem;
+        }
+        
+        .progress-step.active {
+            color: #0066cc;
+            font-weight: 600;
+        }
+        
+        .progress-step.completed {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">VolunteerHub</div>
+        <div class="nav-menu">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+            <a href="{% url 'projects' %}" class="nav-link">Projects</a>
+            <a href="{% url 'events' %}" class="nav-link">Events</a>
+            <a href="{% url 'certificates' %}" class="nav-link">Certificates</a>
+            <div class="nav-buttons">
+                <a href="{% url 'logout' %}" class="btn btn-login">Logout</a>
+            </div>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="hero" style="height: 30vh;">
+        <div class="hero-content">
+            <h1>Complete Your Organization Profile</h1>
+            <p>Tell potential volunteers about your mission and the impact you make</p>
+        </div>
+    </section>
+
+    <div class="form-container">
+        <div class="form-progress">
+            <div class="progress-step completed">1. Create Account</div>
+            <div class="progress-step active">2. Organization Details</div>
+            <div class="progress-step">3. Create Projects</div>
+        </div>
+        
+        <h2 class="form-title">Your Organization Profile</h2>
+        <p class="form-subtitle">This information will be displayed to potential volunteers</p>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label class="form-label">Organization Logo</label>
+                {{ form.profile_image }}
+                <div class="form-text">Upload your organization's logo</div>
+                {% if form.profile_image.errors %}
+                    <div class="error-message">{{ form.profile_image.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Organization Name</label>
+                {{ form.organization_name }}
+                <div class="form-text">The official name of your organization</div>
+                {% if form.organization_name.errors %}
+                    <div class="error-message">{{ form.organization_name.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Location</label>
+                {{ form.location }}
+                <div class="form-text">Where is your organization based?</div>
+                {% if form.location.errors %}
+                    <div class="error-message">{{ form.location.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                {{ form.phone_number }}
+                <div class="form-text">Contact number for volunteer inquiries</div>
+                {% if form.phone_number.errors %}
+                    <div class="error-message">{{ form.phone_number.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">About Your Organization</label>
+                {{ form.bio }}
+                <div class="form-text">Describe your organization's mission, values, and the impact you make</div>
+                {% if form.bio.errors %}
+                    <div class="error-message">{{ form.bio.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Skills Needed</label>
+                {{ form.skills }}
+                <div class="form-text">What volunteer skills is your organization looking for? (e.g., teaching, web design, photography)</div>
+                {% if form.skills.errors %}
+                    <div class="error-message">{{ form.skills.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn-submit">Complete Profile & Continue</button>
+            
+            <div class="form-footer">
+                <p>You can edit this information later in your organization settings.</p>
+            </div>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VolunteerHub</h3>
+                <p>Building a better world through volunteerism and social impact.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'projects' %}">Browse Projects</a>
+                <a href="{% url 'events' %}">Upcoming Events</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@volunteerhub.org</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Volunteer Street</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VolunteerHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html> 

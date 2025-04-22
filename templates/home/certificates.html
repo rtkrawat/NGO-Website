@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Hub - Certificates</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">VolunteerHub</div>
+        <div class="nav-menu">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+            <a href="{% url 'projects' %}" class="nav-link">Projects</a>
+            <a href="{% url 'events' %}" class="nav-link">Events</a>
+            <a href="{% url 'certificates' %}" class="nav-link active">Certificates</a>
+            <div class="nav-buttons">
+                <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-login">Registration</a>
+            </div>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Volunteer Certificates</h1>
+            <p>Recognize your contributions and share your achievements</p>
+        </div>
+    </section>
+
+    <section class="certificates-info">
+        <h2>How Certificates Work</h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-icon">🔍</div>
+                <h3>1. Participate</h3>
+                <p>Engage in volunteer activities and complete assigned tasks</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">✅</div>
+                <h3>2. Verification</h3>
+                <p>Your hours and contributions are verified by the organization</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🏆</div>
+                <h3>3. Earn Certificates</h3>
+                <p>Receive digital certificates for completed volunteer work</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">📱</div>
+                <h3>4. Share</h3>
+                <p>Download and share your certificates on social media or your resume</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="certificate-types">
+        <h2>Available Certificate Types</h2>
+        <div class="certificate-grid">
+            <div class="certificate-card">
+                <div class="certificate-icon">🌱</div>
+                <h3>Volunteer Service</h3>
+                <p>For completing volunteer hours at any registered organization</p>
+                <ul>
+                    <li>Bronze: 10+ hours</li>
+                    <li>Silver: 50+ hours</li>
+                    <li>Gold: 100+ hours</li>
+                </ul>
+            </div>
+            <div class="certificate-card">
+                <div class="certificate-icon">🚀</div>
+                <h3>Project Completion</h3>
+                <p>For successfully completing specific volunteer projects</p>
+                <ul>
+                    <li>Based on project requirements</li>
+                    <li>Lists specific skills utilized</li>
+                    <li>Endorsed by project coordinator</li>
+                </ul>
+            </div>
+            <div class="certificate-card">
+                <div class="certificate-icon">💼</div>
+                <h3>Leadership</h3>
+                <p>For volunteers who have led teams or initiatives</p>
+                <ul>
+                    <li>Team Leadership</li>
+                    <li>Project Coordination</li>
+                    <li>Mentorship</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="login-prompt">
+        <div class="prompt-content">
+            <h2>View Your Certificates</h2>
+            <p>Log in to your account to view, download, and share your earned certificates</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Login to Account</a>
+            <p class="small-text">Don't have an account yet? <a href="{% url 'register' %}">Register Here</a></p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VolunteerHub</h3>
+                <p>Building a better world through volunteerism and social impact.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'projects' %}">Browse Projects</a>
+                <a href="{% url 'events' %}">Upcoming Events</a>
+                <a href="{% url 'register' %}">Join Now</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@volunteerhub.org</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Volunteer Street</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VolunteerHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html> 

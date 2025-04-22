@@ -1,0 +1,443 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VolunteerHub - Projects</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .projects-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .projects-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .project-title {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #0066cc;
+        }
+        
+        .project-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .project-meta span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .project-meta i {
+            margin-right: 0.5rem;
+        }
+        
+        .project-description {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .project-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-tag {
+            background-color: #e6f2ff;
+            color: #0066cc;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+        }
+        
+        .btn-apply {
+            padding: 0.5rem 1.5rem;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-apply:hover {
+            background-color: #0052a3;
+        }
+        
+        .filters-section {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .filter-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .filter-dropdown {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .filter-toggle {
+            background: none;
+            border: none;
+            color: #0066cc;
+            cursor: pointer;
+        }
+        
+        .search-box {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .search-input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .search-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">VolunteerHub</div>
+        <div class="nav-menu">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+            <a href="{% url 'projects' %}" class="nav-link active">Projects</a>
+            <a href="{% url 'events' %}" class="nav-link">Events</a>
+            <a href="{% url 'certificates' %}" class="nav-link">Certificates</a>
+            <div class="nav-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-primary">My Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-login">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-signup">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Volunteer Projects</h1>
+            <p>Find opportunities to make a difference in your community</p>
+            <div class="search-container">
+                <input type="text" placeholder="Search for projects...">
+                <button class="btn btn-primary">Find Projects</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="projects-container">
+        <div class="filters-section">
+            <div class="filters-header">
+                <h3>Filter Projects</h3>
+                <button class="filter-toggle">Reset Filters</button>
+            </div>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search projects by keyword...">
+                <button class="search-btn">Search</button>
+            </div>
+            <div class="filter-groups">
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="filter-dropdown">
+                        <option value="">All Categories</option>
+                        <option value="education">Education</option>
+                        <option value="environment">Environment</option>
+                        <option value="health">Health & Wellness</option>
+                        <option value="community">Community Development</option>
+                        <option value="animals">Animal Welfare</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Location</label>
+                    <select class="filter-dropdown">
+                        <option value="">All Locations</option>
+                        <option value="remote">Remote</option>
+                        <option value="local">Local</option>
+                        <option value="international">International</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Duration</label>
+                    <select class="filter-dropdown">
+                        <option value="">Any Duration</option>
+                        <option value="oneday">One Day</option>
+                        <option value="shortterm">Short Term (< 1 month)</option>
+                        <option value="longterm">Long Term (> 1 month)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Skills Needed</label>
+                    <select class="filter-dropdown">
+                        <option value="">All Skills</option>
+                        <option value="teaching">Teaching</option>
+                        <option value="tech">Technology</option>
+                        <option value="medical">Medical</option>
+                        <option value="construction">Construction</option>
+                        <option value="art">Art & Design</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="projects-header">
+            <h2>Available Projects</h2>
+            <p>Browse through our curated list of volunteer opportunities</p>
+        </div>
+        
+        <div class="project-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{% static 'images/default-project.jpg' %}" alt="Beach Cleanup">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Beach Cleanup Initiative</h3>
+                    <div class="project-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Coastal Area</span>
+                        <span><i class="fas fa-calendar"></i> May 15, 2025</span>
+                        <span><i class="fas fa-clock"></i> 4 hours</span>
+                    </div>
+                    <div class="project-description">
+                        <p>Join our community effort to clean up local beaches and protect marine life. Volunteers will collect trash, sort recyclables, and learn about ocean conservation.</p>
+                    </div>
+                    <div class="project-skills">
+                        <span class="skill-tag">Environment</span>
+                        <span class="skill-tag">Outdoor</span>
+                        <span class="skill-tag">Teamwork</span>
+                    </div>
+                    <div class="project-footer">
+                        <span>5 spots left</span>
+                        <a href="#" class="btn-apply">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{% static 'images/default-project.jpg' %}" alt="Literacy Program">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Children's Literacy Program</h3>
+                    <div class="project-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Community Library</span>
+                        <span><i class="fas fa-calendar"></i> Ongoing</span>
+                        <span><i class="fas fa-clock"></i> 2 hours/week</span>
+                    </div>
+                    <div class="project-description">
+                        <p>Help children develop a love for reading by volunteering as a reading buddy. Volunteers will read with children aged 6-10 and assist with basic reading comprehension.</p>
+                    </div>
+                    <div class="project-skills">
+                        <span class="skill-tag">Education</span>
+                        <span class="skill-tag">Teaching</span>
+                        <span class="skill-tag">Children</span>
+                    </div>
+                    <div class="project-footer">
+                        <span>10 spots left</span>
+                        <a href="#" class="btn-apply">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{% static 'images/default-project.jpg' %}" alt="Food Bank">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Food Bank Distribution</h3>
+                    <div class="project-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Downtown</span>
+                        <span><i class="fas fa-calendar"></i> Every Saturday</span>
+                        <span><i class="fas fa-clock"></i> 3 hours</span>
+                    </div>
+                    <div class="project-description">
+                        <p>Support our local food bank by sorting donations, packing food boxes, and distributing meals to families in need. No experience necessary, just a helpful attitude!</p>
+                    </div>
+                    <div class="project-skills">
+                        <span class="skill-tag">Food Security</span>
+                        <span class="skill-tag">Logistics</span>
+                        <span class="skill-tag">Community</span>
+                    </div>
+                    <div class="project-footer">
+                        <span>8 spots left</span>
+                        <a href="#" class="btn-apply">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{% static 'images/default-project.jpg' %}" alt="Tech Workshop">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Senior Tech Workshop</h3>
+                    <div class="project-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Senior Center</span>
+                        <span><i class="fas fa-calendar"></i> June 1-15, 2025</span>
+                        <span><i class="fas fa-clock"></i> 2 hours/day</span>
+                    </div>
+                    <div class="project-description">
+                        <p>Teach basic technology skills to seniors in our community. Help them learn to use smartphones, tablets, and computers for everyday tasks like email, video calls, and online shopping.</p>
+                    </div>
+                    <div class="project-skills">
+                        <span class="skill-tag">Technology</span>
+                        <span class="skill-tag">Teaching</span>
+                        <span class="skill-tag">Senior Care</span>
+                    </div>
+                    <div class="project-footer">
+                        <span>3 spots left</span>
+                        <a href="#" class="btn-apply">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="#" class="btn btn-primary">Load More Projects</a>
+        </div>
+    </div>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Are you an organization?</h2>
+            <p>Create your own volunteer project and connect with passionate volunteers.</p>
+            <a href="{% url 'register' %}" class="btn btn-primary">Register Your Organization</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VolunteerHub</h3>
+                <p>Building a better world through volunteerism and social impact.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'projects' %}">Browse Projects</a>
+                <a href="{% url 'events' %}">Upcoming Events</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@volunteerhub.org</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Volunteer Street</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VolunteerHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
+ 

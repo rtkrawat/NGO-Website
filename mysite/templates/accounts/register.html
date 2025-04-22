@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - VolunteerHub</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .form-container {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #0066cc;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background-color: #0052a3;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .user-type-container {
+            display: flex;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .user-type-option {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .user-type-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .user-type-option.active {
+            background-color: #e6f2ff;
+            border: 1px solid #0066cc;
+        }
+
+        .user-type-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .radio-hidden {
+            display: none;
+        }
+        
+        .helptext {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.3rem;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">VolunteerHub</div>
+        <div class="nav-menu">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+            <a href="{% url 'projects' %}" class="nav-link">Projects</a>
+            <a href="{% url 'events' %}" class="nav-link">Events</a>
+            <a href="{% url 'certificates' %}" class="nav-link">Certificates</a>
+            <div class="nav-buttons">
+                <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-login active">Registration</a>
+            </div>
+        </div>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="hero" style="height: 40vh;">
+        <div class="hero-content">
+            <h1>Join Our Community</h1>
+            <p>Create an account to start your volunteer journey</p>
+        </div>
+    </section>
+
+    <div class="form-container">
+        <h2 class="form-title">Create Your Account</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="user-type-container">
+                <div class="user-type-option {% if form.user_type.value == 'volunteer' %}active{% endif %}" id="volunteer-option">
+                    <div class="user-type-icon">👤</div>
+                    <h3>Volunteer</h3>
+                    <p>Find opportunities to serve and make a difference</p>
+                </div>
+                <div class="user-type-option {% if form.user_type.value == 'ngo' %}active{% endif %}" id="ngo-option">
+                    <div class="user-type-icon">🏢</div>
+                    <h3>Organization</h3>
+                    <p>Create projects and recruit volunteers</p>
+                </div>
+            </div>
+            <div style="display: none;">
+                {{ form.user_type }}
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <div class="error-message">{{ form.first_name.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <div class="error-message">{{ form.last_name.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error-message">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="error-message">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="error-message">{{ form.password1.errors }}</div>
+                {% endif %}
+                <span class="helptext">Your password must contain at least 8 characters and can't be entirely numeric.</span>
+            </div>
+            
+            <div class="form-group">
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="error-message">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn-submit">Create Account</button>
+            
+            <div class="form-footer">
+                Already have an account? <a href="{% url 'login' %}">Login here</a>
+            </div>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VolunteerHub</h3>
+                <p>Building a better world through volunteerism and social impact.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'projects' %}">Browse Projects</a>
+                <a href="{% url 'events' %}">Upcoming Events</a>
+                <a href="{% url 'register' %}">Join Now</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@volunteerhub.org</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Volunteer Street</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VolunteerHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        // User type selection
+        const volunteerOption = document.getElementById('volunteer-option');
+        const ngoOption = document.getElementById('ngo-option');
+        const userTypeInput = document.querySelector('input[name="user_type"]');
+        
+        volunteerOption.addEventListener('click', function() {
+            volunteerOption.classList.add('active');
+            ngoOption.classList.remove('active');
+            document.querySelector('input[value="volunteer"]').checked = true;
+        });
+        
+        ngoOption.addEventListener('click', function() {
+            ngoOption.classList.add('active');
+            volunteerOption.classList.remove('active');
+            document.querySelector('input[value="ngo"]').checked = true;
+        });
+    </script>
+</body>
+</html> 

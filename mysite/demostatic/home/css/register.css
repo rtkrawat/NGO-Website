@@ -1,0 +1,234 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    overflow-x: hidden;
+    background: #1a1f2c;
+}
+
+.background-slideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+.background-slideshow img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.background-slideshow img.active {
+    opacity: 0.4;
+}
+
+.animated-circles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    opacity: 0.1;
+    animation: float 15s infinite;
+}
+
+.circle:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    left: -150px;
+    top: -150px;
+    animation-delay: 0s;
+}
+
+.circle:nth-child(2) {
+    width: 400px;
+    height: 400px;
+    right: -200px;
+    top: 30%;
+    animation-delay: 5s;
+}
+
+.circle:nth-child(3) {
+    width: 200px;
+    height: 200px;
+    left: 30%;
+    bottom: -100px;
+    animation-delay: 10s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, 30px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.register-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 20px;
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-title {
+    animation: fadeIn 1s ease-out;
+}
+
+.animate-form {
+    animation: fadeIn 1.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.user-type-selector {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.type-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid #4CAF50;
+    background: transparent;
+    color: #4CAF50;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.type-btn:hover {
+    background: #4CAF50;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.type-btn.active {
+    background: #4CAF50;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.register-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    border: none;
+    color: white;
+    padding: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.register-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.form-footer {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.form-footer a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .register-box {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .user-type-selector {
+        flex-direction: column;
+    }
+
+    .type-btn {
+        width: 100%;
+    }
+}
